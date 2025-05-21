@@ -119,7 +119,7 @@ Effectuez l'étape 3 de la documentation "Livrez votre travail".
 Votre copie est maintenant à jour à partir du dépôt principal.
 
 Ajoutez l'image `pedro_panic.webp` ci-dessous :
-![pas Pedro :(](...........)
+![pas Pedro :(](./karen.webp)
 
 Effectuez l'étape 4 puis 5 de la documentation "Livrez votre travail".
 
