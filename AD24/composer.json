@@ -1,0 +1,13 @@
+{
+    "name": "jdr/game-master",
+    "description": "Un système de gestion de tirages aléatoires pour JDR",
+    "type": "project",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+} 
