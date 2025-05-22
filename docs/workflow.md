@@ -23,6 +23,17 @@ Pour passer à SSH, nous allons mettre à jour le remote. Retrouvez l'adresse SS
 git remote set-url origin <url copiée>
 ```
 
+3/ Effectuez les exercices du module dans une branche créée à partir du main du dépôt principal
+```shell
+# création de la branche
+git branch module_Dxx prof/main
+git checkout module_Dxx
+
+Pour passer à SSH, nous allons mettre à jour le remote. Retrouvez l'adresse SSH, elle ressemble à `git@github.com:......../ItAK-DFS........git`). Lancez ensuite :
+```shell
+git remote set-url origin <url copiée>
+```
+
 3/ Créez une branche pour votre module à partir de la branche main du dépôt principal :
 ```shell
 # mise à jour du dépot local
