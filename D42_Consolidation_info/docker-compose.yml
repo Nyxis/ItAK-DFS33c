@@ -1,6 +1,49 @@
-# version: '3.8'
+#erreurs corrigées:
+  # ajout de name test error du build.
+  # espace après les - pour reconnaitre list.
+  # ajout container_name
+  # routes volumes
 
+
+name: d42
 services:
+  web:
+    image: httpd:latest
+    container_name: apache-container
+    ports:
+      - "81:80"
+    volumes:
+      - ./vhost/localhost.conf:/usr/local/apache2/conf/vhosts/localhost.conf
+      - ./vhost/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./public:/usr/local/apache2/htdocs
+    networks:
+      - bapt_reseau
+    depends_on:
+    - php
+  
+  php:
+    image: php:8.4-fpm 
+    container_name: php-container
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - bapt_reseau
+
+  composer:
+    image: composer:latest
+    container_name: composer-container
+    working_dir: /app
+    volumes:
+      - ./src:/app
+    networks:
+      - bapt_reseau
+    command: tail -f /dev/null
+    #maintien
+networks:
+  bapt_reseau:
+    driver: bridge
+
+
 
   # alias_du_container :
   #   image: nom_de_la_recette:version_de_la_recette
