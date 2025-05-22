@@ -130,7 +130,7 @@ Effectuez l'étape 3 de la documentation "[livrez votre travail](../docs/workflo
 Votre copie est maintenant à jour à partir du dépôt principal.
 
 Ajoutez l'image `pedro_panic.webp` ci-dessous :
-![pas Pedro :(](https://raw.githubusercontent.com/404BySam/ItAK-DFS33c/refs/heads/module_Dxx/D70_Git/pedro_panic.webp)
+![pas Pedro :(](./pedro_panic.webp)
 
 Effectuez l'étape 4 puis 5 de la documentation "[livrez votre travail](../docs/workflow.md)".
 
