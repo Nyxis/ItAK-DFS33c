@@ -124,7 +124,7 @@ Votre copie est maintenant à jour à partir du dépôt principal.
 
 Ajoutez l'image `pedro_panic.webp` ci-dessous :
 
-![pas Pedro :(](./pedro_panic.webp)
+![pas Pedro :(](./anne.webp)
 
 
 Effectuez l'étape 4 puis 5 de la documentation "[livrez votre travail](../docs/workflow.md)".
