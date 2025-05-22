@@ -18,6 +18,7 @@ Chaque système propose son gestionnaire de paquets, et nous allons les utiliser
 
 **MacOS**
 [Homebrew](https://brew.sh/)
+
 ```bash
 # assure que Git est bien dans la dernière version
 brew update; brew reinstall git
@@ -25,6 +26,7 @@ brew update; brew reinstall git
 
 **Linux (Ubuntu)**
 [Apt-get](https://doc.ubuntu-fr.org/apt)
+
 ```bash
 sudo apt-get update
 sudo apt-get upgrade git
@@ -34,14 +36,15 @@ sudo apt-get install git
 
 **Windows**
 [WinGet](https://learn.microsoft.com/fr-fr/windows/package-manager/winget/) via Windows Powershell
+
 ```powershell
 winget install --id Git.Git -e
 ```
 
 ### Créez un espace de travail
 
-Choisissez un dossier racine pour vos projets; ```~/Workspace/IT-Akademy``` est conseillé.
-Dans ce dossier, créez les dossiers ```.git``` et ```.ssh```.
+Choisissez un dossier racine pour vos projets; `~/Workspace/IT-Akademy` est conseillé.
+Dans ce dossier, créez les dossiers `.git` et `.ssh`.
 
 ### Sécurisation des accès aux dépots distants via SSH
 
@@ -55,6 +58,7 @@ Pour tous les cas pratiques, nous allons utiliser un serveur Github pour publier
 
 Générons nos clés pour commencer :
 **MacOs / Linux**
+
 ```bash
 cd <votre workspace>
 
@@ -67,6 +71,7 @@ ssh-keygen -t rsa -b 4096 -C "<votre_email@it-students.fr>" -f ./.ssh/it_akademy
 ```
 
 **Windows**
+
 ```powershell
 cd <votre workspace>
 winget install --id Microsoft.OpenSSH.Client -e
@@ -76,6 +81,7 @@ ssh-keygen -t rsa -b 4096 -C "<votre_email@it-students.fr>" -f ".ssh\it_akademy_
 Vous pouvez sécuriser votre clé via une passphrase, ce qui est fortement conseillé si votre clé est utilisée pour accéder à une plateforme de production ou à des informations critiques sur votre production (mots de passe, adresses ip / ports, ...).
 
 Pour vérifier que vos clés sont installées, vous pouvez lister le contenu du dossier `.ssh` :
+
 ```bash
 ls -al .ssh
 ```
@@ -96,6 +102,7 @@ Vous disposez maintenant d'un dépôt local capable d'échanger avec votre fork.
 Votre authentification passera par 3 configurations : Nom, Email et clé privée.
 
 Pour les référencer, éditez le fichier `.git/config`, pour y ajouter les 3 configurations suivantes :
+
 ```config
 [core]
     # .....
@@ -107,6 +114,7 @@ Pour les référencer, éditez le fichier `.git/config`, pour y ajouter les 3 co
 ```
 
 Vous pouvez également exécuter ces 3 commandes, si vous souhaitez automatiser le processus de configuration de votre dépôt :
+
 ```bash
 git config user.name "Prénom Nom"
 git config user.email "p.nom@it-students.fr"
@@ -123,7 +131,7 @@ Effectuez l'étape 3 de la documentation "[livrez votre travail](../docs/workflo
 Votre copie est maintenant à jour à partir du dépôt principal.
 
 Ajoutez l'image `pedro_panic.webp` ci-dessous :
-![pas Pedro :(](...........)
+![pas Pedro :(](./pedro_panic.webp)
 
 Effectuez l'étape 4 puis 5 de la documentation "[livrez votre travail](../docs/workflow.md)".
 
@@ -137,7 +145,7 @@ Récupérez la branche `merge_me` dans votre dépôt local et effectuez un `git 
 
 Un conflit va aparaître, résolvez le en fonction de vos goûts puis publiez le résultat dans votre branche de travail.
 
-__Tips__ : `merge`, `pull`, `commit`, `fetch`
+**Tips** : `merge`, `pull`, `commit`, `fetch`
 
 Recommencez avec la branche `rebase_me`, mais en utilisant cette fois `git rebase` dans votre branche de travail.
 Attention, dans le cas d'un rebase, la commande de résolution ne sera pas la même.
