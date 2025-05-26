@@ -1,0 +1,75 @@
+body {
+    background-image:url("https://wallpapers.com/images/hd/snake-game-1680-x-1050-background-6syqer1fr6oahe0b.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: middle;
+    background-color: #7f9f00;
+}
+.header{
+    font-family: Sans-Serif;
+    position: absolute;
+    margin-left: 50px;
+}
+#score {
+    font-size: 20px;
+    font-weight: bold;
+}
+#restart {
+    font-family: Sans-Serif;
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    margin: auto;
+    width: 200px;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 50px;
+    display: none;
+}
+#difficulty {
+    font-family: Sans-Serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+.container {
+    display: block;
+    margin: auto;
+    width: 800px;
+    margin-top: 100px;
+}
+#champ {
+    position: relative;
+    width: 800px;
+    height: 500px;
+    background-color: black;
+}
+
+#snake {
+    position: absolute;
+    z-index: 1;
+}
+
+#apple {
+    position: absolute;
+    top: 300px;
+    left: 300px;
+}
+
+.snake-body {
+    height: 18px;
+    width: 18px;
+    margin: 1px;
+    border-radius: 4px;
+    background-color: #75b74c;
+    position: absolute;
+}
+.snake-head {
+    height: 20px;
+    width: 20px;
+    background-image:url("https://cdn-icons-png.freepik.com/256/7963/7963355.png");
+    background-size: cover;   
+    background-repeat: no-repeat;
+}
