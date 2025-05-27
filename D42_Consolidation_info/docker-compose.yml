@@ -1,13 +1,9 @@
-# version: '3.8'
+version: '3.8'
 
 services:
-
-  # alias_du_container :
-  #   image: nom_de_la_recette:version_de_la_recette
-  #   ports:     # équivalent de l'option -p de la commande "docker run"
-  #     - "port_local:port_container"
-  #   volume:    # équivalent de l'option -v de la commande "docker run"
-  #     - "chemin\fichier\ou\dossier\local:/chemin/fichier/ou/dossier/container"
-  #     # exemple : README.md:/var/www/html/README.md publie l'énoncé de l'exercice dans le dossier /var/www/html du container
-  #   depends_on:
-  #     - alias_des_autres_containers_connectés_à_celui_ci
+  php-app:
+    build: .
+    container_name: php-jdr
+    volumes:
+      - .:/app
+    command: php main.php
