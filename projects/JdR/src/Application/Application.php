@@ -2,6 +2,7 @@
 
 namespace Application;
 
+use Module\Character\Character;
 use Module\Character\Party;
 use Module\Mj;
 use Module\Scenario\Encounter;

@@ -32,7 +32,7 @@ class GameMaster
         ;
     }
 
-    private function applyOutcome(Party $party, Outcome $outcome) : bool
+    private function applyOutcome(Party $party, Outcome $outcome, int $score) : bool
     {
         switch ($outcome) {
 
@@ -79,7 +79,12 @@ class GameMaster
                     $score = $this->pleaseGiveMeACrit() + $currentTry * Encounter::EXPE_BUFF
                 );
 
-                if ($this->applyOutcome($party, $outcome)) {
+                if ($this->applyOutcome(
+                        new \stdClass,
+                        // $party,
+                        $outcome,
+                        $score
+                    )) {
                     break;
                 }
 

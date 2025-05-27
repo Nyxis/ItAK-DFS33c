@@ -1,0 +1,57 @@
+[
+    {
+        "title": "Le Comte est Bon (mais l’équipe est nulle)",
+        "encounters":
+        [
+            {
+                "title": "L’Oracle Bourré au Clerjus d’Ail",
+                "flavor": "Dans deux jours, le destin te prendra... par surprise... ou par les pieds... J’sais plus.",
+                "results":
+                {
+                    "failure": 25,
+                    "success": 75
+                }
+            },
+            {
+                "title": "Le Poney Boiteux de la Forêt Moite",
+                "flavor": "Il hennit en ancien elfique et botte à 1d12.",
+                "results":
+                {
+                    "fumble": 5,
+                    "failure": 25,
+                    "success": 60
+                }
+            },
+            {
+                "title": "Le Village des Gobelins Véganophiles",
+                "flavor": "Goûte au tofu sacré étranger, pour toi c’est à gerber, pour nous il a un bon bouquet !",
+                "results":
+                {
+                    "fumble": 10,
+                    "failure": 25,
+                    "success": 50
+                }
+            },
+            {
+                "title": "Le Syndicat des Nécromanciens Marxistes",
+                "flavor": "Plus-value ou post-vie ? Il faut choisir, camarade.",
+                "results":
+                {
+                    "fumble": 10,
+                    "failure": 25,
+                    "success": 50
+                }
+            },
+            {
+                "title": "Le Comte de Torture Administrative",
+                "flavor": "Jean-Didier ne tue pas. Il ajourne à perpétuité. Lex Papyrum, Dolor Eternum.",
+                "results":
+                {
+                    "fumble": 10,
+                    "failure": 25,
+                    "success": 50
+                }
+            }
+        ]
+    }
+]
