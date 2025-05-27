@@ -14,13 +14,11 @@ class Deck extends Tirage {
     public function tirer(): Resultat {
         $couleur = random_int(1, $this->nbCouleurs);
         $valeur = random_int(1, $this->nbValeurs);
-
         $valeurFinale = ($couleur - 1) * $this->nbValeurs + $valeur;
 
         $min = 1;
         $max = $this->nbCouleurs * $this->nbValeurs;
-        $statut = $this->calculerStatut($valeurFinale, $min, $max);
 
-        return new Resultat($valeurFinale, $statut);
+        return new Resultat($valeurFinale, $min, $max);
     }
 }

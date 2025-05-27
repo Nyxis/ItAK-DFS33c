@@ -16,9 +16,8 @@ class Piece extends Tirage {
 
     public function tirer(): Resultat {
         $valeur = $this->lancer($this->nombreLancers);
-        $min = $this->nombreLancers * 1; // que des "1"
-        $max = $this->nombreLancers * 2; // que des "2"
-        $statut = $this->calculerStatut($valeur, $min, $max);
-        return new Resultat($valeur, $statut);
+        $min = $this->nombreLancers * 1;
+        $max = $this->nombreLancers * 2;
+        return new Resultat($valeur, $min, $max);
     }
 }

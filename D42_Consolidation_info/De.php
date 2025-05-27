@@ -11,7 +11,6 @@ class De extends Tirage {
 
     public function tirer(): Resultat {
         $valeur = random_int(1, $this->faces);
-        $statut = $this->calculerStatut($valeur, 1, $this->faces);
-        return new Resultat($valeur, $statut);
+        return new Resultat($valeur, 1, $this->faces);
     }
 }
