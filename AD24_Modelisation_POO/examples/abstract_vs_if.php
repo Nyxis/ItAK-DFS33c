@@ -53,6 +53,8 @@ class Constat
         public Vehicule $vehicule1,
         public Vehicule $vehicule2,
     )
+    {
+    }
 }
 
 interface Soda

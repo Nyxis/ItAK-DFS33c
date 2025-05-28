@@ -45,4 +45,9 @@ class Encounter
         // ladder is not reaching 100 ? Critical
         return Outcome::CRITICAL;
     }
+
+    public function getResults(): array
+{
+    return $this->resultLadder;
+}
 }
