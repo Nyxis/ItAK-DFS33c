@@ -7,16 +7,13 @@ use Module\Scenario\Model\Scenario;
 use Module\Scenario\Model\Encounter;
 use Module\Scenario\Model\Outcome;
 use Lib\ValueObject\PositiveInt;
+use Lib\DataStore;
 
 class ScenarioFactory
 {
-    private array $scenariosData;
-
-    public function __construct(string $filePath)
-    {
-        $content = file_get_contents($filePath);
-        $this->scenariosData = json_decode($content, true);
-    }
+    public function __construct(
+        private Datastore $datastore
+    ) {}
 
     public function createScenario(array $data): Scenario
     {
@@ -42,7 +39,8 @@ class ScenarioFactory
 
     public function createScenarios(): \Iterator
     {
-        $scenariosData = $this->scenariosData;
+        //Recup datas à l'interface
+        $scenariosData = $this->datastore->loadData();
         foreach ($scenariosData as $scenarioData) {
             yield $this->createScenario($scenarioData);
         }
