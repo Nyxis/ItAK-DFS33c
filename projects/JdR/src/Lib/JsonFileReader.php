@@ -14,7 +14,6 @@ class JsonFileReader
         if (!json_validate($content)) {
             throw new \RunTimeException('JSON fil invalid');
         }
-
         return json_decode($content, true);
     }
 }

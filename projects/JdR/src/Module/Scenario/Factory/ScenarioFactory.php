@@ -11,6 +11,7 @@ use Lib\DataStore;
 
 class ScenarioFactory
 {
+    //Modif pour découplage 
     public function __construct(
         private Datastore $datastore
     ) {}
@@ -18,16 +19,17 @@ class ScenarioFactory
     public function createScenario(array $data): Scenario
     {
         $encounters = [];
-
+        //Result pour chaque encounter
         foreach ($data['encounters'] as $encounterData) {
             $results = [];
-
+            //Boucle sur tableau de results avec probabilité
             foreach ($encounterData['results'] as $outcome => $probability) {
                 $results[] = new Result(
                     new PositiveInt($probability),
                     Outcome::from($outcome)
                 );
             }
+            //Ajout titre, descrpt et result au tableau
             $encounters[] = new Encounter(
                 $encounterData['title'],
                 $encounterData['flavor'],
@@ -39,7 +41,7 @@ class ScenarioFactory
 
     public function createScenarios(): \Iterator
     {
-        //Recup datas à l'interface
+        //Recup. datas
         $scenariosData = $this->datastore->loadData();
         foreach ($scenariosData as $scenarioData) {
             yield $this->createScenario($scenarioData);

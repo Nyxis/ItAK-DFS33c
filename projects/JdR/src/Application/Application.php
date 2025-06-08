@@ -6,7 +6,8 @@ use Lib\ValueObject\PositiveInt;
 use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
 use Module\Scenario\Factory\ScenarioFactory;
-use Module\Scenario\Model as Scenario;
+use Lib\Adapter\JsonFileDatastoreAdapter;
+use Lib\JsonFileReader;
 
 class Application
 {
@@ -47,16 +48,20 @@ class Application
         );
     }
 
-    public function run($script, ?int $nbRuns = self::DEFAULT_NB_RUNS)
+    public function run(string $scenarioTitle)
     {
         echo "Démarrage jeu ";
         try {
             // var_dump($this->dataDir);
 
             $scenarioFile = $this->dataDir . '/scenarios.json';
-            $scenarioFactory = new ScenarioFactory($scenarioFile);
+            $scenarioFactory = new ScenarioFactory(
+                new JsonFileDatastoreAdapter(
+                    new JsonFileReader($scenarioFile)
+                )
+            );
 
-
+            $nbRuns = 1;
 
             for ($i = 0; $i < $nbRuns; $i++) {
                 $party = clone $this->party;

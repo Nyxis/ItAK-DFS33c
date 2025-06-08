@@ -83,12 +83,12 @@ class Character
         $this->maxHealth += $nbLevels->value;
         $this->heal($nbLevels);
     }
-
+    //Ajout équipmnt
     public function loot(Equipment $equipment): void
     {
         $this->stuff[] = $equipment;
     }
-
+    //Suppr équipmnt après vérification
     public function drop(Equipment $equipment): void
     {
         $key = array_search($equipment, $this->stuff, true);
@@ -99,11 +99,12 @@ class Character
         $this->stuff = array_values($this->stuff);
     }
 
+    //Lister les équipmnts
     public function getEquippedItems(): array
     {
         return $this->stuff;
     }
-
+    //Vérif présence d'un équipement
     public function hasEquipment(Equipment $equipment): bool
     {
         return in_array($equipment, $this->stuff, true);
