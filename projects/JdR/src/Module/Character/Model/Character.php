@@ -51,27 +51,27 @@ class Character
         $this->level = $level->value;
     }
 
-    public function isAlive() : bool
+    public function isAlive(): bool
     {
         return $this->currentHealth > 0;
     }
 
-    public function heal(PositiveInt $healingPower = new PositiveInt(1)) : void
+    public function heal(PositiveInt $healingPower = new PositiveInt(1)): void
     {
         $this->currentHealth = $healingPower->value;
     }
 
-    public function hurt(PositiveInt $nbWounds = new PositiveInt(1)) : void
+    public function hurt(PositiveInt $nbWounds = new PositiveInt(1)): void
     {
         $this->currentHealth = -$nbWounds->value;
     }
 
-    public function kill() : void
+    public function kill(): void
     {
         $this->hurt(new PositiveInt($this->maxHealth));
     }
 
-    public function levelUp(PositiveInt $nbLevels = new PositiveInt(1)) : void
+    public function levelUp(PositiveInt $nbLevels = new PositiveInt(1)): void
     {
         if (!$this->isAlive()) {
             throw new \LogicException('Deads cannot gain levels.');
@@ -84,12 +84,32 @@ class Character
         $this->heal($nbLevels);
     }
 
-    public function loot(Equipment $equipment)
+    public function loot(Equipment $equipment): void
     {
         $this->stuff[] = $equipment;
     }
 
-    public function __toString() : string
+    public function drop(Equipment $equipment): void
+    {
+        $key = array_search($equipment, $this->stuff, true);
+        if ($key === false) {
+            throw new \InvalidArgumentException('Equipment not found.');
+        }
+        unset($this->stuff[$key]);
+        $this->stuff = array_values($this->stuff);
+    }
+
+    public function getEquippedItems(): array
+    {
+        return $this->stuff;
+    }
+
+    public function hasEquipment(Equipment $equipment): bool
+    {
+        return in_array($equipment, $this->stuff, true);
+    }
+
+    public function __toString(): string
     {
         return $this->isAlive() ?
             sprintf(
@@ -100,7 +120,6 @@ class Character
                 $this->maxHealth,
                 str_pad($this->power, 2, ' ', STR_PAD_LEFT)
             ) :
-            str_pad(sprintf("%s 💀", str_pad($this->name, 18)), 37)
-        ;
+            str_pad(sprintf("%s 💀", str_pad($this->name, 18)), 37);
     }
 }
