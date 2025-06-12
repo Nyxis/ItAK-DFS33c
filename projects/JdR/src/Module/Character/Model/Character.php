@@ -11,27 +11,24 @@ class Character
 
     protected int $maxHealth;
 
-    /**
-     * Property hooks
-     * @see https://www.php.net/manual/en/language.oop5.property-hooks.php
-     */
-    protected int $currentHealth = 0 {
-        set => max(
+    protected int $currentHealth = 0;
+
+    public function getCurrentHealth(): int
+    {
+        return $this->currentHealth;
+    }
+
+    protected function setCurrentHealth(int $value): void
+    {
+        $this->currentHealth = max(
             0, // cannot be deadier than dead
             min($this->maxHealth, $this->currentHealth + $value)
         );
-        /* // raccourci pour
-        set(int $value) {
-            $this->currentHealth = max(
-                0, // cannot be deadier than dead
-                min($this->maxHealth, $this->currentHealth + $value)
-            );
-        }
-        */
     }
 
-    public int $power {
-        get => max(
+    public function getPower(): int
+    {
+        return max(
             0,   // cannot have negative power
             array_sum([
                 $this->level,
@@ -58,12 +55,12 @@ class Character
 
     public function heal(PositiveInt $healingPower = new PositiveInt(1)) : void
     {
-        $this->currentHealth = $healingPower->value;
+        $this->setCurrentHealth($healingPower->value);
     }
 
     public function hurt(PositiveInt $nbWounds = new PositiveInt(1)) : void
     {
-        $this->currentHealth = -$nbWounds->value;
+        $this->setCurrentHealth(-$nbWounds->value);
     }
 
     public function kill() : void
@@ -98,7 +95,7 @@ class Character
                 str_pad($this->level, 2),
                 str_pad($this->currentHealth, 2, ' ', STR_PAD_LEFT),
                 $this->maxHealth,
-                str_pad($this->power, 2, ' ', STR_PAD_LEFT)
+                str_pad($this->getPower(), 2, ' ', STR_PAD_LEFT)
             ) :
             str_pad(sprintf("%s 💀", str_pad($this->name, 18)), 37)
         ;
