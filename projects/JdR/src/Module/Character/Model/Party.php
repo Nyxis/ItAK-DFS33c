@@ -13,7 +13,7 @@ class Party extends Character
     /**
      * @var Character[]
      */
-    public private(set) array $adventurers;
+    public array $adventurers;
 
     public function __construct(
         Character ...$adventurers
@@ -27,10 +27,12 @@ class Party extends Character
      */
     public function isAlive() : bool
     {
-        return array_any(
-            $this->adventurers,
-            fn(Character $adventurer) => $adventurer->isAlive()
-        );
+        foreach ($this->adventurers as $adventurer) {
+            if ($adventurer->isAlive()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private function pickAlives(int $nb, callable $sorter) : array

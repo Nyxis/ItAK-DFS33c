@@ -6,6 +6,8 @@ use Lib\ValueObject\PositiveInt;
 use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
 use Module\Scenario\Factory\ScenarioFactory;
+use Infrastructure\JsonFileDatastoreAdapter;
+use Lib\File\FileFactory;
 use Module\Scenario\Model as Scenario;
 
 class Application
@@ -51,18 +53,21 @@ class Application
     public function run($script, ?int $nbRuns = self::DEFAULT_NB_RUNS)
     {
         try {
-            var_dump($this->dataDir);
 
             $scenarioFactory = new ScenarioFactory(
-                'chemin/vers/le/fichier.json'
+                new JsonFileDatastoreAdapter(
+                    FileFactory::create($this->dataDir . '/scenarios.json')
+                )
             );
 
             for ($i = 0; $i < $nbRuns; $i++) {
                 $party = clone $this->party;  // create a new Party on each run
 
+                $character = new Character\Character('🗡️ Hero', new PositiveInt(10));
+                
                 foreach ($scenarioFactory->createScenarios() as $scenario) {
                     echo (
-                        $this->mj->entertain($party,$scenario) ?
+                        $this->mj->entertain($character, $scenario) ?
                             "\n>>> 🤘 Victory 🤘 <<<\n\n" :
                             "\n>>> 💀 Defeat 💀 <<<\n\n"
                     );

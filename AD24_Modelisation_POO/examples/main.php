@@ -122,7 +122,7 @@ else {
     $logger = new ProdLogger;
 }
 
-$logger
+$logger->log('Test log message');
 
 
 
