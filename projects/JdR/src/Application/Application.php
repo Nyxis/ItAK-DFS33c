@@ -6,7 +6,8 @@ use Lib\ValueObject\PositiveInt;
 use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
 use Module\Scenario\Factory\ScenarioFactory;
-use Module\Scenario\Model as Scenario;
+use Lib\Adapter\JsonFileDatastoreAdapter;
+use Lib\JsonFileReader;
 
 class Application
 {
@@ -18,11 +19,10 @@ class Application
     public function __construct(
         private string $dataDir
     ) {
-        $this->mj = new class
-        (
+        $this->mj = new class(
             new Mj\Deck(
-                ['♦️','♥️','♠️','♣️'],
-                [2,3,4,5,6,7,8,9,10,'V','Q','K',1]
+                ['♦️', '♥️', '♠️', '♣️'],
+                [2, 3, 4, 5, 6, 7, 8, 9, 10, 'V', 'Q', 'K', 1]
             ),
             new Mj\Deck(
                 ['⚽', '🎳', '🥌'],
@@ -36,7 +36,7 @@ class Application
         ) extends Mj\GameMaster {
             protected function announce(string $message)
             {
-                echo $message."\n";
+                echo $message . "\n";
             }
         };
 
@@ -48,29 +48,37 @@ class Application
         );
     }
 
-    public function run($script, ?int $nbRuns = self::DEFAULT_NB_RUNS)
+    public function run(string $scenarioTitle)
     {
+        echo "Démarrage jeu ";
         try {
-            var_dump($this->dataDir);
+            // var_dump($this->dataDir);
 
+            $scenarioFile = $this->dataDir . '/scenarios.json';
             $scenarioFactory = new ScenarioFactory(
-                'chemin/vers/le/fichier.json'
+                new JsonFileDatastoreAdapter(
+                    new JsonFileReader($scenarioFile)
+                )
             );
 
+            $nbRuns = 1;
+
             for ($i = 0; $i < $nbRuns; $i++) {
-                $party = clone $this->party;  // create a new Party on each run
+                $party = clone $this->party;
 
                 foreach ($scenarioFactory->createScenarios() as $scenario) {
+                    echo "Scénario en cours...\n";
                     echo (
-                        $this->mj->entertain($party,$scenario) ?
-                            "\n>>> 🤘 Victory 🤘 <<<\n\n" :
-                            "\n>>> 💀 Defeat 💀 <<<\n\n"
+                        $this->mj->entertain($party, $scenario) ?
+                        "\n>>> 🤘 Victory 🤘 <<<\n\n" :
+                        "\n>>> 💀 Defeat 💀 <<<\n\n"
                     );
                 }
             }
-        }
-        catch (\Exception $exception) {
-            echo $exception."\n";
+        } catch (\Exception $exception) {
+            echo "Erreur: " . $exception->getMessage() . "\n";
+            echo "Fichier: " . $exception->getFile() . "\n";
+            echo "Ligne: " . $exception->getLine();
         }
     }
 }
