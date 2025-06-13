@@ -12,26 +12,16 @@ class Character
     protected int $maxHealth;
 
     /**
-     * Property hooks
-     * @see https://www.php.net/manual/en/language.oop5.property-hooks.php
+     * Current health of the character.
      */
-    protected int $currentHealth = 0 {
-        set => max(
-            0, // cannot be deadier than dead
-            min($this->maxHealth, $this->currentHealth + $value)
-        );
-        /* // raccourci pour
-        set(int $value) {
-            $this->currentHealth = max(
-                0, // cannot be deadier than dead
-                min($this->maxHealth, $this->currentHealth + $value)
-            );
-        }
-        */
-    }
+    protected int $currentHealth = 0;
 
-    public int $power {
-        get => max(
+    /**
+     * Get the character's power.
+     */
+    public function getPower(): int
+    {
+        return max(
             0,   // cannot have negative power
             array_sum([
                 $this->level,
@@ -58,25 +48,30 @@ class Character
 
     public function heal(PositiveInt $healingPower = new PositiveInt(1)) : void
     {
-        $this->currentHealth = $healingPower->value;
+        $this->setCurrentHealth($healingPower->value);
     }
 
     public function hurt(PositiveInt $nbWounds = new PositiveInt(1)) : void
     {
-        $this->currentHealth = -$nbWounds->value;
+        $this->setCurrentHealth(-$nbWounds->value);
     }
 
-    public function kill() : void
+    /**
+     * Safely set current health, ensuring it stays within valid bounds.
+     */
+    protected function setCurrentHealth(int $delta): void
     {
-        $this->hurt(new PositiveInt($this->maxHealth));
+        $this->currentHealth = max(
+            0,
+            min($this->maxHealth, $this->currentHealth + $delta)
+        );
     }
 
+    /**
+     * Level up the character by a given number of levels.
+     */
     public function levelUp(PositiveInt $nbLevels = new PositiveInt(1)) : void
     {
-        if (!$this->isAlive()) {
-            throw new \LogicException('Deads cannot gain levels.');
-        }
-
         $this->level += $nbLevels->value;
         // raccourci pour : $this->level = $this->level + $nbLevel;
 
@@ -84,7 +79,7 @@ class Character
         $this->heal($nbLevels);
     }
 
-    public function loot(Equipment $equipment)
+    public function loot($equipment)
     {
         $this->stuff[] = $equipment;
     }
@@ -98,7 +93,7 @@ class Character
                 str_pad($this->level, 2),
                 str_pad($this->currentHealth, 2, ' ', STR_PAD_LEFT),
                 $this->maxHealth,
-                str_pad($this->power, 2, ' ', STR_PAD_LEFT)
+                str_pad($this->getPower(), 2, ' ', STR_PAD_LEFT)
             ) :
             str_pad(sprintf("%s 💀", str_pad($this->name, 18)), 37)
         ;

@@ -13,7 +13,7 @@ class Party extends Character
     /**
      * @var Character[]
      */
-    public private(set) array $adventurers;
+    public array $adventurers;
 
     public function __construct(
         Character ...$adventurers

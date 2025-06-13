@@ -1,20 +1,23 @@
 <?php
 
+class Biere extends Boisson
+{
 function amenerBiere(string $serveur, string $typeBiere) : Biere
 {
-    if ($serveur == 'Nyx') {
-        echo 'Bonjour, avec plaisir';
-    }
-    elseif ($serveur == 'JD') {
-        echo 'Prend du vin jeune con.';
-    }
-    else {
-        die("Le serveur $serveur n\'existe pas");
+    switch ($serveur) {
+        case 'Nyx':
+            echo 'Bonjour, avec plaisir';
+            break;
+        case 'JD':
+            echo 'Prend du vin jeune con.';
+            break;
+        default:
+            die("Le serveur $serveur n'existe pas");
     }
 
     return new Biere($typeBiere);
 }
-
+} 
 abstract class Serveur
 {
     abstract public function amenerBiere(string $typeBiere) : Biere;
@@ -53,13 +56,23 @@ class Constat
         public Vehicule $vehicule1,
         public Vehicule $vehicule2,
     )
+    {
+    }
 }
 
 interface Soda
 {
     public function isSucree() : bool;
     public function isGazeux() : bool;
-    public function isFruite() : bool;
+}
+class Boisson
+{
+    protected string $type;
+
+    public function __construct(string $type = 'inconnue')
+    {
+        $this->type = $type;
+    }
 }
 
 interface Taxable
@@ -131,24 +144,7 @@ interface VehiculeAutonome extends Vehicule
 abstract class MobilierUrbain
 {
     protected int $taille;
-
 }
-class ConeDeChantier extends MobilierUrbain
-{
-
-}
-class PoteauPub extends MobilierUrbain implements Vehicule
-{
-    public function drive()
-    {
-    }
-
-    public function isImmobile() : bool
-    {
-        return true;
-    }
-}
-
 class Voiture implements Vehicule, Taxable
 {
     public function drive()
@@ -159,8 +155,22 @@ class Voiture implements Vehicule, Taxable
     {
         return false;
     }
-}
-class Scooter extends Vehicule
-{
 
+    public function getTaxRate() : float
+    {
+        // Return a default tax rate, adjust as needed
+        return 0.2;
+    }
+}
+
+class Scooter implements Vehicule
+{
+    public function drive()
+    {
+    }
+
+    public function isImmobile() : bool
+    {
+        return false;
+    }
 }

@@ -1,0 +1,27 @@
+[
+    {
+        "title": "La Forêt Mystérieuse",
+        "encounters": [
+            {
+                "description": "Vous entrez dans une forêt sombre et mystérieuse. Des bruits étranges résonnent autour de vous.",
+                "choices": [
+                    "Explorer les environs",
+                    "Faire demi-tour",
+                    "Attendre et observer"
+                ]
+            },
+            {
+                "description": "Un vieux chêne semble vous observer. Ses branches bougent doucement dans le vent.",
+                "choices": [
+                    "S'approcher de l'arbre",
+                    "Passer son chemin",
+                    "Lancer une pierre"
+                ]
+            }
+        ],
+        "result": {
+            "success": "Vous avez survécu à la forêt mystérieuse et en êtes ressorti plus sage.",
+            "failure": "La forêt vous a vaincu. Votre aventure s'arrête ici."
+        }
+    }
+] 

@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  apache:
+    image: php:8.2-apache
+    container_name: apache
+    ports:
+      - "81:80"
+    volumes:
+      - ./public:/var/www/html
+      - ./vhosts/localhost.conf:/etc/apache2/sites-enabled/000-default.conf:ro
+    working_dir: /var/www/html
