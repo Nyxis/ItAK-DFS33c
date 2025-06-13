@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Scenario;
+namespace Module\Scenario\Model;
 
 /**
  * An RPG Scenario, like a book

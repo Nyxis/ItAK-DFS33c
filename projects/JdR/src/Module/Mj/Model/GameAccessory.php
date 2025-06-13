@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Mj;
+namespace Module\Mj\Model;
 
 /**
  * Abstract class for result generation behavior definition.

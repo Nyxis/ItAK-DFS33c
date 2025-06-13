@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Mj;
+namespace Module\Mj\Model;
 
 /**
  * A deck of cards, producing a result by flipping the first card in it

@@ -18,3 +18,8 @@ Pour déposer vos développements et livrables en général, vous devez suivre l
 
   - [Les bonnes pratiques de Git](docs/git.md)
   - [Livrer son travail](docs/workflow.md)
+
+## Projet JdR
+
+Le projet fil rouge de la session est contenu dans le dossier [projects/JdR](projects/JdR).
+Au fil des modules, ce projet sera enrichi pour devenir une vraie application, en production.

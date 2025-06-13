@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Mj;
+namespace Module\Mj\Model;
 
 /**
  * A coin, producing a result by flipping it n times

@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Mj;
+namespace Module\Mj\Model;
 
 /**
  * A dice, producing a result between 0 and the max value given as argument.

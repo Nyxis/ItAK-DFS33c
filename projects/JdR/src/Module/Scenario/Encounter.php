@@ -2,6 +2,8 @@
 
 namespace Module\Scenario;
 
+use Module\Scenario\Result;
+
 /**
  * A representation of an Encounter in an RPG
  */

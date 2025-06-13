@@ -1,6 +1,6 @@
 <?php
 
-namespace Module\Mj;
+namespace Module\Mj\Model;
 
 interface RandomResultGenerator
 {

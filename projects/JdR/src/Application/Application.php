@@ -2,24 +2,22 @@
 
 namespace Application;
 
-use Module\Character\Character;
-use Module\Character\Party;
-use Module\Mj;
-use Module\Scenario\Encounter;
-use Module\Scenario\Outcome;
-use Module\Scenario\Result;
-use Module\Scenario\Scenario;
+use Lib\ValueObject\PositiveInt;
+use Module\Character\Model as Character;
+use Module\Mj\Model as Mj;
+use Module\Scenario\Factory\ScenarioFactory;
+use Module\Scenario\Model as Scenario;
 
 class Application
 {
-    const DEFAULT_NB_RUNS = 20;
+    const DEFAULT_NB_RUNS = 1;
 
     protected Mj\GameMaster $mj;
-    protected Scenario $scenario;
-    protected Party $party;
+    protected Character\Party $party;
 
-    public function __construct()
-    {
+    public function __construct(
+        private string $dataDir
+    ) {
         $this->mj = new class
         (
             new Mj\Deck(
@@ -42,60 +40,33 @@ class Application
             }
         };
 
-        $this->party = new Party(
-            maxHealthPoints: 4
-        );
-
-        $this->scenario = new Scenario(
-            'Le Comte est Bon (mais l’équipe est nulle)',
-            new Encounter(
-                'L’Oracle Bourré au Clerjus d’Ail',
-                'Dans deux jours, le destin te prendra... par surprise... ou par les pieds... J’sais plus.',
-                new Result(25, Outcome::FAILURE),
-                new Result(75, Outcome::SUCCESS),
-            ),
-            new Encounter(
-                'Le Poney Boiteux de la Forêt Moite',
-                'Il hennit en ancien elfique et botte à 1d12.',
-                new Result(5, Outcome::FUMBLE),
-                new Result(25, Outcome::FAILURE),
-                new Result(60, Outcome::SUCCESS),
-            ),
-            new Encounter(
-                'Le Village des Gobelins Véganophiles',
-                'Goûte au tofu sacré étranger, pour toi c’est à gerber, pour nous il a un bon bouquet !',
-                new Result(10, Outcome::FUMBLE),
-                new Result(25, Outcome::FAILURE),
-                new Result(50, Outcome::SUCCESS),
-            ),
-            new Encounter(
-                'Le Syndicat des Nécromanciens Marxistes',
-                'Plus-value ou post-vie ? Il faut choisir, camarade.',
-                new Result(10, Outcome::FUMBLE),
-                new Result(25, Outcome::FAILURE),
-                new Result(50, Outcome::SUCCESS),
-            ),
-            new Encounter(
-                'Le Comte de Torture Administrative',
-                'Jean-Didier ne tue pas. Il ajourne à perpétuité. Lex Papyrum, Dolor Eternum.',
-                new Result(10, Outcome::FUMBLE),
-                new Result(25, Outcome::FAILURE),
-                new Result(50, Outcome::SUCCESS),
-            )
+        $this->party = new Character\Party(
+            new Character\Character('🪓Gertrude', new PositiveInt(10)),
+            new Character\Character('🔥Zehirmann', new PositiveInt(15), new PositiveInt(11)),
+            new Character\Character('🗡️ Enoriel', new PositiveInt(15), new PositiveInt(11)),
+            new Character\Character('⚔️ Wrandrall', new PositiveInt(10)),
         );
     }
 
-    public function run(array $argv)
+    public function run($script, ?int $nbRuns = self::DEFAULT_NB_RUNS)
     {
-        $nbRolls = $argv[1] ?? self::DEFAULT_NB_RUNS;
-
         try {
-            for ($i = 0; $i < $nbRolls; $i++) {
-                $this->mj->entertainParty(
-                    $party = clone $this->party,
-                    $this->scenario
-                );
-                echo "\n";
+            var_dump($this->dataDir);
+
+            $scenarioFactory = new ScenarioFactory(
+                'chemin/vers/le/fichier.json'
+            );
+
+            for ($i = 0; $i < $nbRuns; $i++) {
+                $party = clone $this->party;  // create a new Party on each run
+
+                foreach ($scenarioFactory->createScenarios() as $scenario) {
+                    echo (
+                        $this->mj->entertain($party,$scenario) ?
+                            "\n>>> 🤘 Victory 🤘 <<<\n\n" :
+                            "\n>>> 💀 Defeat 💀 <<<\n\n"
+                    );
+                }
             }
         }
         catch (\Exception $exception) {

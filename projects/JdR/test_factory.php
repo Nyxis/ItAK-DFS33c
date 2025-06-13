@@ -11,18 +11,21 @@ use Module\Scenario\ScenarioFactory;
 $scenarios = ScenarioFactory::loadFromJson('data/scenarios.json');
 
 foreach ($scenarios as $scenario) {
-    echo "Scénario : {$scenario->name}\n";
+    echo "🎲 Scénario : {$scenario->name}\n\n";
 
     foreach ($scenario->play() as $encounter) {
         echo " - Rencontre : {$encounter->title}\n";
         echo "   > {$encounter->flavour}\n";
 
-        foreach ($encounter->getResults() as $result) {
-            echo "     * " . $result->outcome->value . " : " . $result->probabiliy . "%\n";
-        }
+        $score = rand(0, 100);
+
+        $outcome = $encounter->resolve($score);
+
+        echo "   🎯 Score tiré : $score\n";
+        echo "   ✅ Résultat : " . strtoupper($outcome->value) . "\n\n";
     }
 
-    echo "\n";
+    echo str_repeat("-", 40) . "\n\n";
 }
 
 

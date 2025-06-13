@@ -7,5 +7,7 @@ require_once PROJECT_DIR.'/src/Lib/Autoloader.php';
 new Autoloader(PROJECT_DIR);
 
 // create Application
-$application = new \Application\Application();
-$application->run($argv);
+$application = new \Application\Application(
+    dataDir: PROJECT_DIR.'/data'
+);
+$application->run(...$argv);
