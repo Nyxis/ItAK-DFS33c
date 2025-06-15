@@ -2,6 +2,8 @@
 
 namespace Application;
 
+use Lib\File\File;
+use Lib\Persistence\File\FileDatasource;
 use Lib\ValueObject\PositiveInt;
 use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
@@ -51,10 +53,12 @@ class Application
     public function run($script, ?int $nbRuns = self::DEFAULT_NB_RUNS)
     {
         try {
-            var_dump($this->dataDir);
-
             $scenarioFactory = new ScenarioFactory(
-                'chemin/vers/le/fichier.json'
+                // new \Module\Scenario\Factory\MockScenarioDatasource(),
+                new FileDatasource(
+                    new File($this->dataDir . '/scenarios.json'),
+                    // .....
+                )
             );
 
             for ($i = 0; $i < $nbRuns; $i++) {
