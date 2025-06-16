@@ -19,9 +19,10 @@ class Scenario
         $this->encounters = $encounters;
     }
 
-    /**
-     * Generate all Encounters
-     */
+    public function getEncounters(): array
+    {
+        return $this->encounters;
+    }
     public function play(): \Iterator
     {
         yield from $this->encounters;

@@ -149,4 +149,14 @@ class Party extends Character
             $this->adventurers
         );
     }
+    public function members(): array
+    {
+        return $this->adventurers;
+    }
+
+    public function isWipedOut(): bool
+    {
+    return !$this->isAlive();
+    }
+
 }

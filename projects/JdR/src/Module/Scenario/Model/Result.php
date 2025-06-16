@@ -10,7 +10,7 @@ use Lib\ValueObject\PositiveInt;
 class Result
 {
     public function __construct(
-        public readonly PositiveInt $probabiliy,
+        public readonly PositiveInt $probability,
         public readonly Outcome $outcome
     ) {
     }
@@ -19,7 +19,7 @@ class Result
     {
         return sprintf('%s < %d',
             $this->outcome->toString(),
-            $this->probabiliy->value
+            $this->probability->value
         );
     }
 }
