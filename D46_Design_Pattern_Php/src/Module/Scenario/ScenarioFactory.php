@@ -3,6 +3,9 @@
 namespace Module\Scenario;
 
 use Lib\Datastore;
+use Module\Scenario\Scenario;
+use Module\Scenario\ScenarioEncounter;
+use Module\Scenario\Result;
 
 class ScenarioFactory
 {
@@ -25,20 +28,27 @@ class ScenarioFactory
         return $scenarios;
     }
 
-    private function createScenario(array $data): Scenario
+    public function createScenario(array $data): Scenario
     {
         $encounters = [];
-        foreach ($data['encounters'] as $encounterData) {
+        foreach (($data['encounters'] ?? []) as $encounterData) {
             $encounters[] = new ScenarioEncounter(
-                $encounterData['description'],
-                $encounterData['choices']
+                $encounterData['title'] . "\n" . $encounterData['flavor'],
+                [
+                    "Succès (" . ($encounterData['results']['success'] ?? 0) . "%)",
+                    "Échec (" . ($encounterData['results']['failure'] ?? 0) . "%)",
+                    "Échec critique (" . ($encounterData['results']['fumble'] ?? 0) . "%)"
+                ]
             );
         }
 
         return new Scenario(
-            $data['title'],
+            $data['title'] ?? 'Sans titre',
             $encounters,
-            new Result($data['result']['success'], $data['result']['failure'])
+            new Result(
+                $data['result']['success'] ?? '',
+                $data['result']['failure'] ?? ''
+            )
         );
     }
 } 

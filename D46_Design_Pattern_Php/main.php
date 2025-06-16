@@ -1,17 +1,20 @@
 <?php
 
-require_once __DIR__ . '/src/Personnage.php';
-require_once __DIR__ . '/src/Equipement.php';
+require_once __DIR__ . '/Personnage.php';
+require_once __DIR__ . '/Equipement.php';
 require_once __DIR__ . '/src/Lib/Datastore.php';
+require_once __DIR__ . '/src/Lib/File.php';
+require_once __DIR__ . '/src/Lib/FileReader.php';
 require_once __DIR__ . '/src/Lib/JsonFileReader.php';
-require_once __DIR__ . '/src/Lib/JsonFileDatastoreAdapter.php';
+require_once __DIR__ . '/src/Lib/FileDatastore.php';
 require_once __DIR__ . '/src/Module/Scenario/ScenarioFactory.php';
 require_once __DIR__ . '/src/Module/Scenario/Scenario.php';
 require_once __DIR__ . '/src/Module/Scenario/ScenarioEncounter.php';
 require_once __DIR__ . '/src/Module/Scenario/Result.php';
 
+use Lib\File;
 use Lib\JsonFileReader;
-use Lib\JsonFileDatastoreAdapter;
+use Lib\FileDatastore;
 use Module\Scenario\ScenarioFactory;
 
 // Création du personnage
@@ -23,8 +26,9 @@ $perso->equiper(new Equipement("Bouclier"));
 
 // Création de la factory et chargement des scénarios
 $factory = new ScenarioFactory(
-    new JsonFileDatastoreAdapter(
-        new JsonFileReader(__DIR__ . '/data/scenarios.json')
+    new FileDatastore(
+        new File(__DIR__ . '/../projects/JdR/data/scenarios.json'),
+        new JsonFileReader()
     )
 );
 
