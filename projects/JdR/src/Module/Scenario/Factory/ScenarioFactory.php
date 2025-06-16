@@ -2,26 +2,47 @@
 
 namespace Module\Scenario\Factory;
 
+use Lib\Datastore;
+use Module\Scenario\Model\Encounter;
+use Module\Scenario\Model\Outcome;
+use Module\Scenario\Model\Result;
 use Module\Scenario\Model\Scenario;
 
 class ScenarioFactory
 {
-    public function __construct(string $filePath)
-    {
-        /* complete me */
-    }
+    public function __construct(
+        private Datastore $datastore
+    ) {}
 
-    public function createScenario(/* ..... */) : Scenario
+    /**
+     * @return \Generator<Scenario>
+     */
+    public function createScenarios(): \Generator
     {
-        return new Scenario(/* ..... */);
-    }
+        foreach ($this->datastore->loadData() as $scenarioData) {
+            $encounters = [];
 
-    public function createScenarios() : \Iterator
-    {
-        $scenariosData = [/* .... */];
+            foreach ($scenarioData['encounters'] as $encounterData) {
+                $results = [];
 
-        foreach ($scenariosData as $scenarioData) {
-            yield $this->createScenario(/* ..... */);
+                foreach ($encounterData['results'] as $resultData) {
+                    $results[] = new Result(
+                        new \Lib\ValueObject\PositiveInt($resultData['probability']),
+                        Outcome::from($resultData['outcome'])
+                    );
+                }
+
+                $encounters[] = new Encounter(
+                    $encounterData['title'],
+                    $encounterData['flavor'],
+                    ...$results
+                );
+            }
+
+            yield new Scenario(
+                $scenarioData['title'],
+                ...$encounters
+            );
         }
     }
 }

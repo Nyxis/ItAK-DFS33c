@@ -2,10 +2,13 @@
 
 namespace Module\Mj\Model;
 
+use Module\Character\Model\Party;
 use Module\Character\Model\Character;
 use Module\Scenario\Model\Encounter;
 use Module\Scenario\Model\Outcome;
 use Module\Scenario\Model\Scenario;
+use Module\Scenario\Strategy\ResolutionStrategy;
+
 use Lib\ValueObject\PositiveInt;
 
 /**
@@ -23,78 +26,82 @@ class GameMaster
 
     protected function announce(string $message)
     {
+        echo $message . "\n";
     }
 
-    public function pleaseGiveMeACrit() : int
+    public function pleaseGiveMeACrit(): int
     {
         // select a random game accessory
         return $this->gameAccessories[array_rand($this->gameAccessories)]
-            ->generateRandomPercentScore()
-        ;
+            ->generateRandomPercentScore();
     }
 
-    private function applyOutcome(Character $character, Outcome $outcome) : bool
+    private function applyOutcome(Character $character, Outcome $outcome): bool
     {
         switch ($outcome) {
-
             case Outcome::FUMBLE:
                 $character->kill();
-
                 return false;
 
             case Outcome::FAILURE:
                 $character->hurt();
-
                 return false;
 
             case Outcome::SUCCESS:
                 $character->levelUp();
-
                 return true;
 
             case Outcome::CRITICAL:
                 $character->levelUp();
                 $character->heal();
-
                 return true;
         }
     }
 
-    public function entertain(Character $character, Scenario $scenario) : bool
-    {
-        $this->announce($character);
+    public function entertain(
+        Party $party,
+        Scenario $scenario,
+        ResolutionStrategy $strategy
+    ): bool {
+        echo $party . "\n";
 
-        foreach ($scenario->play() as $encounter) {
-            if (!$character->isAlive()) {
-                return false;
-            }
+        foreach ($scenario->getEncounters() as $encounter) {
+            echo "\n" . $encounter . "\n";
 
-            $this->announce("\n".$encounter);
+            $tries = 0;
+            $score = 0;
+            $bonus = 0;
 
-            $isSuccess = false;
-            for ($currentTry = 0; $character->isAlive() && !$isSuccess; $currentTry++) {
-                $outcome = $encounter->resolve(
-                    $score = $this->pleaseGiveMeACrit() + $currentTry * Encounter::EXPE_BUFF
-                );
+            do {
+                $score = $this->play($party, $encounter) + $bonus;
+                $outcome = $strategy->resolve($encounter, $score);
 
-                $this->announce(sprintf('Tentative #%d (+%d%% 🧠) : 🎲%d > %s',
-                    $currentTry + 1,
-                    $currentTry * Encounter::EXPE_BUFF,
+                echo sprintf(
+                    "Tentative #%d (+%d%% 🧠) : 🎲%d > %s\n",
+                    $tries + 1,
+                    $bonus,
                     $score,
                     $outcome->toString()
-                ));
+                );
 
-                $isSuccess = $this->applyOutcome($character, $outcome);
+                foreach ($party->members() as $character) {
+                    if (!$character->isAlive()) continue;
 
-                // too much failures : hurt character badly
-                if (!$isSuccess && $currentTry + 1 >= Encounter::MAX_TRIES) {
-                    $character->hurt(new PositiveInt($currentTry * 2));
+                    $this->applyOutcome($character, $outcome);
                 }
 
-                $this->announce($character);
-            }
+                $bonus += Encounter::EXPE_BUFF;
+                $tries++;
+            } while ($outcome === Outcome::FAILURE && $tries < Encounter::MAX_TRIES);
         }
 
-        return true;
+        echo $party . "\n";
+
+        return !$party->isWipedOut();
+    }
+
+    private function play(Party $party, Encounter $encounter): int
+    {
+        return $this->pleaseGiveMeACrit();
     }
 }

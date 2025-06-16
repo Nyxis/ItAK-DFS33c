@@ -5,8 +5,10 @@ namespace Application;
 use Lib\ValueObject\PositiveInt;
 use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
-use Module\Scenario\Factory\ScenarioFactory;
+use Module\Scenario\Factory\ScenarioFactory;       
+use Module\Character\Factory\CharacterFactory;
 use Module\Scenario\Model as Scenario;
+use Module\Scenario\Strategy\DefaultResolutionStrategy;
 
 class Application
 {
@@ -36,16 +38,17 @@ class Application
         ) extends Mj\GameMaster {
             protected function announce(string $message)
             {
-                echo $message."\n";
+                echo $message . "\n";
             }
         };
 
-        $this->party = new Character\Party(
-            new Character\Character('🪓Gertrude', new PositiveInt(10)),
-            new Character\Character('🔥Zehirmann', new PositiveInt(15), new PositiveInt(11)),
-            new Character\Character('🗡️ Enoriel', new PositiveInt(15), new PositiveInt(11)),
-            new Character\Character('⚔️ Wrandrall', new PositiveInt(10)),
-        );
+        // Lecture des personnages via CharacterFactory
+        $charactersData = json_decode(file_get_contents($this->dataDir . '/characters.json'), true);
+
+        $this->party = new Character\Party(...array_map(
+            fn($data) => CharacterFactory::create($data),
+            $charactersData
+        ));
     }
 
     public function run($script, ?int $nbRuns = self::DEFAULT_NB_RUNS)
@@ -54,23 +57,28 @@ class Application
             var_dump($this->dataDir);
 
             $scenarioFactory = new ScenarioFactory(
-                'chemin/vers/le/fichier.json'
+                new \Lib\File\JsonFileDatastoreAdapter(
+                    new \Lib\File\JsonFileReader($this->dataDir.'/scenarios.json')
+                )
             );
 
+            $strategy = new DefaultResolutionStrategy(); // 👈 stratégie choisie
+
             for ($i = 0; $i < $nbRuns; $i++) {
-                $party = clone $this->party;  // create a new Party on each run
+                $party = clone $this->party;  // Nouvelle Party à chaque run
 
                 foreach ($scenarioFactory->createScenarios() as $scenario) {
                     echo (
-                        $this->mj->entertain($party,$scenario) ?
+                        $this->mj->entertain($party, $scenario, $strategy) ?
                             "\n>>> 🤘 Victory 🤘 <<<\n\n" :
                             "\n>>> 💀 Defeat 💀 <<<\n\n"
                     );
                 }
             }
-        }
-        catch (\Exception $exception) {
-            echo $exception."\n";
+
+        } catch (\Throwable $e) {
+            echo "❌ Une erreur est survenue : " . $e->getMessage() . "\n";
+            debug_print_backtrace();
         }
     }
 }

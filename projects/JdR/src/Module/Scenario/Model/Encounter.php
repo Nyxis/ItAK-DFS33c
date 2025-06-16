@@ -27,7 +27,7 @@ class Encounter
             function (int $ladder, Result $result) {
 
                 $this->resultLadder[] = new Result(
-                    new PositiveInt($ladder = min($ladder + $result->probabiliy->value, 100)),
+                    new PositiveInt($ladder = min($ladder + $result->probability->value, 100)),
                     $result->outcome
                 );
 
@@ -44,7 +44,7 @@ class Encounter
         }
     }
 
-    public function resolve(int $score) : Outcome
+    public function internalResolve(int $score) : Outcome
     {
         if ($score >= 100) {
             return Outcome::CRITICAL;
@@ -57,7 +57,7 @@ class Encounter
         // @see https://www.php.net/manual/fr/function.array-find.php
         return array_find(
                 $this->resultLadder,
-                fn(Result $possibleResult) => $score < $possibleResult->probabiliy->value
+                fn(Result $possibleResult) => $score < $possibleResult->probability->value
             )
             ->outcome
         ;
@@ -75,3 +75,4 @@ class Encounter
         );
     }
 }
+

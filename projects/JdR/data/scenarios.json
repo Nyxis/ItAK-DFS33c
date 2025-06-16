@@ -1,57 +1,52 @@
 [
     {
-        "title": "Le Comte est Bon (mais l’équipe est nulle)",
-        "encounters":
-        [
-            {
-                "title": "L’Oracle Bourré au Clerjus d’Ail",
-                "flavor": "Dans deux jours, le destin te prendra... par surprise... ou par les pieds... J’sais plus.",
-                "results":
-                {
-                    "failure": 25,
-                    "success": 75
-                }
-            },
-            {
-                "title": "Le Poney Boiteux de la Forêt Moite",
-                "flavor": "Il hennit en ancien elfique et botte à 1d12.",
-                "results":
-                {
-                    "fumble": 5,
-                    "failure": 25,
-                    "success": 60
-                }
-            },
-            {
-                "title": "Le Village des Gobelins Véganophiles",
-                "flavor": "Goûte au tofu sacré étranger, pour toi c’est à gerber, pour nous il a un bon bouquet !",
-                "results":
-                {
-                    "fumble": 10,
-                    "failure": 25,
-                    "success": 50
-                }
-            },
-            {
-                "title": "Le Syndicat des Nécromanciens Marxistes",
-                "flavor": "Plus-value ou post-vie ? Il faut choisir, camarade.",
-                "results":
-                {
-                    "fumble": 10,
-                    "failure": 25,
-                    "success": 50
-                }
-            },
-            {
-                "title": "Le Comte de Torture Administrative",
-                "flavor": "Jean-Didier ne tue pas. Il ajourne à perpétuité. Lex Papyrum, Dolor Eternum.",
-                "results":
-                {
-                    "fumble": 10,
-                    "failure": 25,
-                    "success": 50
-                }
-            }
-        ]
+      "title": "Le Comte est Bon (mais l’équipe est nulle)",
+      "encounters": [
+        {
+          "title": "L’Oracle Bourré au Clerjus d’Ail",
+          "flavor": "Dans deux jours, le destin te prendra... par surprise... ou par les pieds... J’sais plus.",
+          "results": [
+            { "probability": 25, "outcome": "echec", "message": "Tu titubes sans comprendre." },
+            { "probability": 75, "outcome": "succes", "message": "Tu comprends le message caché de l’oracle." }
+          ]
+        },
+        {
+          "title": "Le Poney Boiteux de la Forêt Moite",
+          "flavor": "Il hennit en ancien elfique et botte à 1d12.",
+          "results": [
+            { "probability": 5, "outcome": "fumble", "message": "Tu glisses dans la boue." },
+            { "probability": 25, "outcome": "echec", "message": "Le poney t’écrase le pied." },
+            { "probability": 70, "outcome": "succes", "message": "Tu parviens à l’amadouer." }
+          ]
+        },
+        {
+          "title": "Le Village des Gobelins Véganophiles",
+          "flavor": "Goûte au tofu sacré étranger, pour toi c’est à gerber, pour nous il a un bon bouquet !",
+          "results": [
+            { "probability": 10, "outcome": "fumble", "message": "Tu vomis sur le chef gobelin." },
+            { "probability": 25, "outcome": "echec", "message": "Tu manges à contrecœur et t’évanouis." },
+            { "probability": 65, "outcome": "succes", "message": "Tu fais semblant d’aimer ça. Ils t’adorent !" }
+          ]
+        },
+        {
+          "title": "Le Syndicat des Nécromanciens Marxistes",
+          "flavor": "Plus-value ou post-vie ? Il faut choisir, camarade.",
+          "results": [
+            { "probability": 10, "outcome": "fumble", "message": "Tu es transformé·e en manifeste vivant." },
+            { "probability": 25, "outcome": "echec", "message": "Tu es recruté·e de force comme stagiaire non payé·e." },
+            { "probability": 65, "outcome": "succes", "message": "Tu les convaincs que tu es déjà mort·e à l’intérieur." }
+          ]
+        },
+        {
+          "title": "Le Comte de Torture Administrative",
+          "flavor": "Jean-Didier ne tue pas. Il ajourne à perpétuité. Lex Papyrum, Dolor Eternum.",
+          "results": [
+            { "probability": 10, "outcome": "fumble", "message": "Tu remplis un formulaire de 86 pages... avec ton sang." },
+            { "probability": 25, "outcome": "echec", "message": "Ton dossier est rejeté pour faute de majuscule." },
+            { "probability": 65, "outcome": "succes", "message": "Tu obtiens un récépissé de survie temporaire." }
+          ]
+        }
+      ]
     }
-]
+  ]
+  
