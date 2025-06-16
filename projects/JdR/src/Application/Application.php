@@ -80,5 +80,7 @@ class Application
             echo "Fichier: " . $exception->getFile() . "\n";
             echo "Ligne: " . $exception->getLine();
         }
+        
+        debug_print_backtrace();
     }
 }

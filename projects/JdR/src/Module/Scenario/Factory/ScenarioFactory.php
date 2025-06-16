@@ -13,7 +13,7 @@ class ScenarioFactory
 {
     //Modif pour découplage 
     public function __construct(
-        private Datastore $datastore
+        private DataStore $datastore
     ) {}
 
     public function createScenario(array $data): Scenario
