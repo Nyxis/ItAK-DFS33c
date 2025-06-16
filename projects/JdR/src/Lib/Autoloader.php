@@ -9,7 +9,8 @@ class Autoloader
 
         spl_autoload_register(function ($classname) {
 
-            $globPattern = sprintf('%s%ssrc%s%s.php',
+            $globPattern = sprintf(
+                '%s%ssrc%s%s.php',
                 $this->projectDir,
                 DIRECTORY_SEPARATOR,
                 DIRECTORY_SEPARATOR,
