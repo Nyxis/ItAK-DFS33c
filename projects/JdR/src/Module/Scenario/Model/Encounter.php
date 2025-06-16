@@ -9,8 +9,8 @@ use Lib\ValueObject\PositiveInt;
  */
 class Encounter
 {
-    const int MAX_TRIES = 2;
-    const int EXPE_BUFF = 15;
+    const MAX_TRIES = 2;
+    const EXPE_BUFF = 15;
 
     /**
      * @var Result[]

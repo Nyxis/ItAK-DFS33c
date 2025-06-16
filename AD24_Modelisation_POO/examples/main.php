@@ -122,9 +122,4 @@ else {
     $logger = new ProdLogger;
 }
 
-$logger
-
-
-
-
-
+$logger;
