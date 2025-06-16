@@ -7,7 +7,6 @@ use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
 use Module\Scenario\Factory\ScenarioFactory;       
 use Module\Character\Factory\CharacterFactory;
-
 use Module\Scenario\Model as Scenario;
 use Module\Scenario\Strategy\DefaultResolutionStrategy;
 
@@ -63,10 +62,10 @@ class Application
                 )
             );
 
-            $strategy = new DefaultResolutionStrategy(); // 👈 nouvelle stratégie
+            $strategy = new DefaultResolutionStrategy(); // 👈 stratégie choisie
 
             for ($i = 0; $i < $nbRuns; $i++) {
-                $party = clone $this->party;  // nouvelle Party à chaque run
+                $party = clone $this->party;  // Nouvelle Party à chaque run
 
                 foreach ($scenarioFactory->createScenarios() as $scenario) {
                     echo (
@@ -76,9 +75,10 @@ class Application
                     );
                 }
             }
-        }
-        catch (\Exception $exception) {
-            echo $exception . "\n";
+
+        } catch (\Throwable $e) {
+            echo "❌ Une erreur est survenue : " . $e->getMessage() . "\n";
+            debug_print_backtrace();
         }
     }
 }

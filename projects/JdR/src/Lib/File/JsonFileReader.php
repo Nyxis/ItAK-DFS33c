@@ -2,29 +2,30 @@
 
 namespace Lib\File;
 
-class JsonFileReader
+use Lib\StructuredFile;
+
+class JsonFileReader implements StructuredFile
 {
     public function __construct(
-        private string $filepath
+        private string $filePath
     ) {}
-
-    public function read(): string
-    {
-        if (!file_exists($this->filepath)) {
-            throw new \RuntimeException("File not found: {$this->filepath}");
-        }
-
-        return file_get_contents($this->filepath);
-    }
 
     public function parse(): array
     {
-        $json = $this->read();
+        if (!file_exists($this->filePath)) {
+            throw new \RuntimeException("Fichier introuvable : {$this->filePath}");
+        }
 
-        $data = json_decode($json, true);
+        $jsonContent = file_get_contents($this->filePath);
+
+        if (empty($jsonContent)) {
+            throw new \RuntimeException("Le fichier JSON est vide : {$this->filePath}");
+        }
+
+        $data = json_decode($jsonContent, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \RuntimeException("Invalid JSON: ".json_last_error_msg());
+            throw new \InvalidArgumentException("JSON invalide dans {$this->filePath} : " . json_last_error_msg());
         }
 
         return $data;

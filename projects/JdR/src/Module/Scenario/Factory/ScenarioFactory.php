@@ -15,12 +15,10 @@ class ScenarioFactory
     ) {}
 
     /**
-     * @return Scenario[]
+     * @return \Generator<Scenario>
      */
-    public function createScenarios(): array
+    public function createScenarios(): \Generator
     {
-        $scenarios = [];
-
         foreach ($this->datastore->loadData() as $scenarioData) {
             $encounters = [];
 
@@ -37,16 +35,14 @@ class ScenarioFactory
                 $encounters[] = new Encounter(
                     $encounterData['title'],
                     $encounterData['flavor'],
-                    ...$results // spread operator , acces au tableau
+                    ...$results
                 );
             }
 
-            $scenarios[] = new Scenario(
+            yield new Scenario(
                 $scenarioData['title'],
-                ...$encounters // le spread operator pour passer les objets un par un
-            );            
+                ...$encounters
+            );
         }
-
-        return $scenarios;
     }
 }
