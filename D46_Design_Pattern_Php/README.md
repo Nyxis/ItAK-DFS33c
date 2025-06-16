@@ -163,12 +163,3 @@ Vous pouvez également créer une interface StructuredFile qui implémente la m�
 On peut également imaginer une FileFactory qui analyse le chemin de fichier donné en entrée pour créer un fichier structuré du bon type, comme par exemple un objet JsonFile (qui implémente StructuredFile) si me chemin termine par `.json`.
 
 __Tips :__ `SplFileInfo`
-
-
-### Stratégie & Visiteur
-
-Dans la suite, nous utiliserons le pattern Stratégie pour permettre à notre Adapter de connecter n'importe quel type de fichier, et le Visiteur pour les "découvrir".
-
-### Command
-
-Introduction aux Actions, Routing & Controllers.
