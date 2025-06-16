@@ -9,8 +9,8 @@ use Lib\ValueObject\PositiveInt;
  */
 class Encounter
 {
-    const int MAX_TRIES = 2;
-    const int EXPE_BUFF = 15;
+    const MAX_TRIES = 2;
+    const EXPE_BUFF = 15;
 
     /**
      * @var Result[]
@@ -53,14 +53,15 @@ class Encounter
             return Outcome::FUMBLE;
         }
 
-        // Php 8.4
-        // @see https://www.php.net/manual/fr/function.array-find.php
-        return array_find(
-                $this->resultLadder,
-                fn(Result $possibleResult) => $score < $possibleResult->probabiliy->value
-            )
-            ->outcome
-        ;
+        // PHP 8.2 compatible version of array_find
+        foreach ($this->resultLadder as $possibleResult) {
+            if ($score < $possibleResult->probabiliy->value) {
+                return $possibleResult->outcome;
+            }
+        }
+        
+        // Fallback (should not happen if properly configured)
+        return Outcome::CRITICAL;
     }
 
     public function __toString() : string
