@@ -7,13 +7,13 @@ use Module\Scenario\Model\Scenario;
 use Module\Scenario\Model\Encounter;
 use Module\Scenario\Model\Outcome;
 use Lib\ValueObject\PositiveInt;
-use Lib\DataStore;
+use Lib\FileReader;
 
 class ScenarioFactory
 {
     //Modif pour découplage 
     public function __construct(
-        private DataStore $datastore
+        private FileReader $filereader
     ) {}
 
     public function createScenario(array $data): Scenario
@@ -42,7 +42,7 @@ class ScenarioFactory
     public function createScenarios(): \Iterator
     {
         //Recup. datas
-        $scenariosData = $this->datastore->loadData();
+        $scenariosData = $this->filereader->loadData();
         foreach ($scenariosData as $scenarioData) {
             yield $this->createScenario($scenarioData);
         }

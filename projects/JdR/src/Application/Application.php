@@ -6,7 +6,7 @@ use Lib\ValueObject\PositiveInt;
 use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
 use Module\Scenario\Factory\ScenarioFactory;
-use Lib\Adapter\JsonFileDatastoreAdapter;
+use Lib\File\File;
 use Lib\JsonFileReader;
 
 class Application
@@ -48,25 +48,30 @@ class Application
         );
     }
 
-    public function run(string $scenarioTitle)
+    public function run(array $argv)
     {
         echo "Démarrage jeu ";
         try {
             // var_dump($this->dataDir);
 
-            $scenarioFile = $this->dataDir . '/scenarios.json';
-            $scenarioFactory = new ScenarioFactory(
-                new JsonFileDatastoreAdapter(
-                    new JsonFileReader($scenarioFile)
+            // $scenarioFile = $this->dataDir . '/scenarios.json';
+            // $scenarioFactory = new ScenarioFactory(
+            //     new JsonFileDatastoreAdapter(
+            //         new JsonFileReader($scenarioFile)
+            //     )
+            // );
+            $factory = new ScenarioFactory(
+                new FileDatasource(
+                    new File(this->dataDir . '/scenarios.json'),    
+                    new JsonFileReader()
                 )
             );
-
             $nbRuns = 1;
 
             for ($i = 0; $i < $nbRuns; $i++) {
                 $party = clone $this->party;
 
-                foreach ($scenarioFactory->createScenarios() as $scenario) {
+                foreach ($factory->createScenarios() as $scenario) {
                     echo "Scénario en cours...\n";
                     echo (
                         $this->mj->entertain($party, $scenario) ?
