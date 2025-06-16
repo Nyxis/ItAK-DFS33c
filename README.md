@@ -13,6 +13,7 @@ Pour déposer vos développements et livrables en général, vous devez suivre l
   - [AD24 - Modélisation UML](AD24_Modelisation_POO/README.md)
   - [D70 - Git - Versioning](D70_Git/README.md)
   - [D46 - Php / Design patterns](D46_Design_Pattern_Php/README.md)
+  - [D11 - Frameworks Php / Design patterns](D11_Framework_Design_Pattern/README.md)
 
 ## Documentation
 
