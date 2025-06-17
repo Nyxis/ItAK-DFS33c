@@ -1,0 +1,11 @@
+nom,type,prix,poids,dommages,durabilite,description
+"Épée longue","Arme","50","3","1d8","100","Une épée à deux mains classique, équilibrée et fiable"
+"Dague","Arme","15","1","1d4","50","Petite lame idéale pour les attaques rapides"
+"Bâton de mage","Arme magique","100","2","1d6","75","Un bâton enchanté qui amplifie les sorts"
+"Armure de cuir","Armure","45","8","0","80","Protection légère qui ne gêne pas les mouvements"
+"Cotte de mailles","Armure","75","12","0","120","Offre une bonne protection sans trop de poids"
+"Potion de soin","Consommable","25","0.5","0","1","Restaure 2d4+2 points de vie"
+"Grimoire","Magique","150","2","0","60","Contient 3 sorts de niveau 1"
+"Corde elfique","Équipement","30","1","0","200","20 mètres de corde solide et légère"
+"Lanterne","Équipement","10","1","0","50","Éclaire jusqu'à 10 mètres"
+"Sac à dos","Équipement","20","1","0","100","Peut contenir jusqu'à 30kg d'équipement"

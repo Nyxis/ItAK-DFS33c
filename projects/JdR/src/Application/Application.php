@@ -7,6 +7,10 @@ use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
 use Module\Scenario\Factory\ScenarioFactory;
 use Module\Scenario\Model as Scenario;
+use Infrastructure\FileDatastore;
+use Infrastructure\JsonFileReader;
+use Infrastructure\CsvFileReader;
+use Lib\File\File;
 
 class Application
 {
@@ -54,7 +58,13 @@ class Application
             var_dump($this->dataDir);
 
             $scenarioFactory = new ScenarioFactory(
-                'chemin/vers/le/fichier.json'
+                new FileDatastore(
+                    new File($this->dataDir . '/scenarios.json'),
+                    [
+                        new JsonFileReader(),
+                        new CsvFileReader()
+                    ]
+                )
             );
 
             for ($i = 0; $i < $nbRuns; $i++) {
