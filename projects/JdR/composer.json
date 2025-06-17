@@ -1,0 +1,13 @@
+{
+    "name": "itakademy/jdr",
+    "description": "Projet JdR pour le cours de Design Patterns",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.0"
+    }
+} 

@@ -19,12 +19,15 @@ class File
             ));
         }
 
-        foreach(pathinfo($this->filePath) as $key => $value) {
-            if (!property_exists($this, $key)) {
-                continue;
-            }
+        $pathInfo = pathinfo($this->filePath);
+        $this->dirname = $pathInfo['dirname'];
+        $this->basename = $pathInfo['basename'];
+        $this->filename = $pathInfo['filename'];
+        $this->extension = $pathInfo['extension'] ?? '';
+    }
 
-            $this->$key = $value;
-        }
+    public function getFullPath(): string
+    {
+        return $this->filePath;
     }
 }
