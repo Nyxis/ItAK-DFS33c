@@ -2,6 +2,7 @@
 
 namespace Lib\Persistence\File;
 use Lib\File\File;
+use Lib\FileReader;
 use Lib\Persistence\Datasource;
 
 /**
@@ -13,12 +14,13 @@ class FileDatasource implements Datasource
 
     public function __construct(
         private File $sourceFile,
-        // ....... some file drivers
+        private FileDatastore $driver
     ){
     }
 
     public function loadAll() : \Iterator
     {
-        yield from $this->driver /* ... */;
+        
+        yield from $this->driver->read($this-sourceFile);
     }
 }
