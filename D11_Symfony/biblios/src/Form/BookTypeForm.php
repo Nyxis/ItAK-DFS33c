@@ -57,6 +57,7 @@ class BookTypeForm extends AbstractType
                 'multiple' => true,
                 'label' => 'Auteur(s)',
                 'required' => false,
+                'by_reference' => false,
             ])
         ;
     }
