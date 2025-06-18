@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des livres{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Liste des livres</h1>
+            <a href="{{ path('admin_book_new') }}" class="btn btn-primary">Ajouter un livre</a>
+        </div>
+
+        {% if books|length > 0 %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Titre</th>
+                            <th>Auteurs</th>
+                            <th>ISBN</th>
+                            <th>Éditeur</th>
+                            <th>Date d'édition</th>
+                            <th>Pages</th>
+                            <th>Statut</th>
+                            <th>Commentaires</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                            <tr>
+                                <td>{{ book.id }}</td>
+                                <td>{{ book.title }}</td>
+                                <td>
+                                    {% for author in book.authors %}
+                                        {{ author.name }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ book.isbn }}</td>
+                                <td>{{ book.editor ? book.editor.name : '-' }}</td>
+                                <td>{{ book.editedAt ? book.editedAt|date('d/m/Y') : '-' }}</td>
+                                <td>{{ book.pageNumber }}</td>
+                                <td>
+                                    <span class="badge bg-{% if book.status.value == 'available' %}success{% elseif book.status.value == 'borrowed' %}warning{% elseif book.status.value == 'reserved' %}info{% else %}danger{% endif %}">
+                                        {{ book.status.value|capitalize }}
+                                    </span>
+                                </td>
+                                <td>{{ book.comments|length }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Aucun livre trouvé. <a href="{{ path('admin_book_new') }}">Ajoutez le premier livre</a> !
+            </div>
+        {% endif %}
+    </div>
+{% endblock %} 

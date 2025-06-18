@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Enregistrement - Biblios{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h1 class="h3 mb-4 text-center">Enregistrement</h1>
+                    
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="firstname" class="form-label">* Prénom</label>
+                            <input type="text" 
+                                   name="firstname" 
+                                   id="firstname" 
+                                   class="form-control" 
+                                   required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="lastname" class="form-label">* Nom</label>
+                            <input type="text" 
+                                   name="lastname" 
+                                   id="lastname" 
+                                   class="form-control" 
+                                   required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Nom d'utilisateur</label>
+                            <input type="text" 
+                                   name="username" 
+                                   id="username" 
+                                   class="form-control">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">* Adresse email</label>
+                            <input type="email" 
+                                   name="email" 
+                                   id="email" 
+                                   class="form-control" 
+                                   required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Rôles</label>
+                            <div class="form-check">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       name="roles[]" 
+                                       value="ROLE_USER" 
+                                       id="roleUser" 
+                                       checked>
+                                <label class="form-check-label" for="roleUser">
+                                    Utilisateur-rice
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       name="roles[]" 
+                                       value="ROLE_ADMIN" 
+                                       id="roleAdmin">
+                                <label class="form-check-label" for="roleAdmin">
+                                    Administrateur-rice
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="password" class="form-label">* Mot de passe</label>
+                            <input type="password" 
+                                   name="password" 
+                                   id="password" 
+                                   class="form-control" 
+                                   required>
+                        </div>
+
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="submit">
+                                Enregistrer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Auteur ajouté{% endblock %}
+
+{% block body %}
+    <div class="w-50 m-auto mt-5 text-center">
+        <h1 class="mb-4">Auteur ajouté avec succès !</h1>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ path('admin_author_new') }}" class="btn btn-success">Ajouter un autre auteur</a>
+            <a href="{{ path('admin_author_index') }}" class="btn btn-primary">Voir la liste des auteurs</a>
+        </div>
+    </div>
+{% endblock %} 

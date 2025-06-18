@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Biblios{% endblock %}
+
+{% block body %}
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="display-4 mb-4">Biblios</h1>
+                    <p class="lead mb-4">Catalogue en ligne de la médiathèque de Trifouillis-les-Oies</p>
+                    <a href="{{ path('app_book_index') }}" class="btn btn-primary btn-lg">
+                        Consulter le catalogue
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- About Section -->
+        <section class="mb-5">
+            <h2 class="mb-4">Biblios: qu'est-ce que c'est ?</h2>
+            <p class="lead">
+                Biblios est la plateforme officielle de consultation du catalogue de la médiathèque de Trifouillis-les-Oies. 
+                Explorez notre collection avec une recherche efficace, vérifiez la disponibilité des ouvrages en temps réel, 
+                et effectuez des réservations en toute simplicité. Biblios s'engage pour faciliter l'accès à la culture 
+                et promouvoir la richesse de notre patrimoine littéraire.
+            </p>
+        </section>
+
+        <!-- Features Section -->
+        <section>
+            <h2 class="mb-4">Fonctionnalités clés :</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Recherche avancée</h5>
+                            <p class="card-text">Trouvez facilement les livres qui vous intéressent grâce à notre système de recherche performant.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Statut en temps réel</h5>
+                            <p class="card-text">Consultez instantanément la disponibilité des ouvrages dans notre collection.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Informations détaillées</h5>
+                            <p class="card-text">Accédez à toutes les informations essentielles sur chaque ouvrage.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card feature-card">
+                        <div class="card-body">
+                            <h5 class="card-title">Réservation simplifiée</h5>
+                            <p class="card-text">Réservez vos livres en quelques clics grâce à notre interface intuitive.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %} 

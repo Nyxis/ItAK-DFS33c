@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Éditeur ajouté{% endblock %}
+
+{% block body %}
+    <div class="w-50 m-auto mt-5 text-center">
+        <h1 class="mb-4">Éditeur ajouté avec succès !</h1>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ path('admin_editor_new') }}" class="btn btn-success">Ajouter un autre éditeur</a>
+            <a href="{{ path('admin_editor_index') }}" class="btn btn-primary">Voir la liste des éditeurs</a>
+        </div>
+    </div>
+{% endblock %} 

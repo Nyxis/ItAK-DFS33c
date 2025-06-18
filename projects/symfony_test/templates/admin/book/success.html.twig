@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre ajouté{% endblock %}
+
+{% block body %}
+    <div class="w-50 m-auto mt-5 text-center">
+        <h1 class="mb-4">Livre ajouté avec succès !</h1>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{{ path('admin_book_new') }}" class="btn btn-success">Ajouter un autre livre</a>
+            <a href="{{ path('admin_book_index') }}" class="btn btn-primary">Voir la liste des livres</a>
+        </div>
+    </div>
+{% endblock %} 

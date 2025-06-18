@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ book.title }} - Biblios{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_main') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="{{ path('app_book_index') }}">Catalogue</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ book.title }}</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <!-- Image du livre -->
+            <div class="col-md-4 mb-4">
+                {% set coverUrl = book.cover %}
+                {% if not coverUrl or coverUrl == '' %}
+                    {% set coverUrl = asset('images/books/Harry-potter-1.jpg') %}
+                {% endif %}
+                
+                <img src="{{ coverUrl }}" 
+                     class="img-fluid rounded shadow" 
+                     alt="{{ book.title }}" 
+                     style="max-height: 500px; width: 100%; object-fit: cover;"
+                     onerror="this.src='{{ asset('images/books/Harry-potter-1.jpg') }}';">
+            </div>
+
+            <!-- Informations du livre -->
+            <div class="col-md-8">
+                <h1 class="mb-3">{{ book.title }}</h1>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>ISBN :</strong></div>
+                            <div class="col-sm-9">{{ book.isbn ?: 'Non spécifié' }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Auteur(s) :</strong></div>
+                            <div class="col-sm-9">
+                                {% if book.authors|length > 0 %}
+                                    {% for author in book.authors %}
+                                        {{ author.name }}{% if not loop.last %}, {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <em>Auteur non spécifié</em>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Éditeur :</strong></div>
+                            <div class="col-sm-9">{{ book.editor ? book.editor.name : 'Non spécifié' }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Nombre de pages :</strong></div>
+                            <div class="col-sm-9">{{ book.pageNumber ?: 'Non spécifié' }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Date d'édition :</strong></div>
+                            <div class="col-sm-9">{{ book.editedAt ? book.editedAt|date('d/m/Y') : 'Non spécifiée' }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Statut :</strong></div>
+                            <div class="col-sm-9">
+                                {% set statusClass = 'secondary' %}
+                                {% set statusText = 'Non défini' %}
+                                
+                                {% if book.status %}
+                                    {% if book.status.value == 'available' %}
+                                        {% set statusClass = 'success' %}
+                                        {% set statusText = 'Disponible' %}
+                                    {% elseif book.status.value == 'borrowed' %}
+                                        {% set statusClass = 'warning' %}
+                                        {% set statusText = 'Emprunté' %}
+                                    {% elseif book.status.value == 'reserved' %}
+                                        {% set statusClass = 'info' %}
+                                        {% set statusText = 'Réservé' %}
+                                    {% elseif book.status.value == 'lost' %}
+                                        {% set statusClass = 'danger' %}
+                                        {% set statusText = 'Perdu' %}
+                                    {% endif %}
+                                {% endif %}
+                                
+                                <span class="badge bg-{{ statusClass }}">{{ statusText }}</span>
+                            </div>
+                        </div>
+                        
+                        {% if book.plot %}
+                            <div class="row mb-3">
+                                <div class="col-sm-3"><strong>Résumé :</strong></div>
+                                <div class="col-sm-9">{{ book.plot|nl2br }}</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Bouton retour -->
+                <div class="mt-4">
+                    <a href="{{ path('app_book_index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left"></i> Retour à la liste
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %} 
