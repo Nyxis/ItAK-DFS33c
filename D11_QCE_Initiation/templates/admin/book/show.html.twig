@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'un livre{% endblock %}
+
+{% block body %}
+<div class="example-wrapper">
+    <h1>Livre :</h1>
+
+    {% if book is not null %}
+        <div class="card mb-1 m-auto">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <h4 class="mb-1">{{ book.title }}</h4>
+                    <small class="text-muted">Identifiant : {{ book.id }}</small>
+                </div>
+                <div class="card-text">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Date de publication : {{ book.editedAt is not null ? book.editedAt|date('d M Y') : '-' }}</li>
+                        <li class="list-group-item">Nombre de pages : {{ book.pageNumber }}</li>
+                        <li class="list-group-item">Auteur : {{ book.author ? book.author.name : '-' }}</li>
+                        <li class="list-group-item">Editeur : {{ book.editor ? book.editor.name : '-' }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div>Livre non trouvé</div>
+    {% endif %}
+
+    <a href="{{ path('app_admin_book_index') }}" class="btn btn-primary mt-3">Retour</a>
+</div>
+{% endblock %}

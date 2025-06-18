@@ -2,26 +2,41 @@
 
 namespace Module\Scenario\Factory;
 
+use Lib\Datastore;
 use Module\Scenario\Model\Scenario;
+use Module\Scenario\Model\Encounter;
 
 class ScenarioFactory
 {
-    public function __construct(string $filePath)
+    private Datastore $datastore;
+
+    public function __construct(Datastore $datastore)
     {
-        /* complete me */
+        $this->datastore = $datastore;
     }
 
-    public function createScenario(/* ..... */) : Scenario
+    public function createScenario(array $data) : Scenario
     {
-        return new Scenario(/* ..... */);
+        $encounters = array_map(
+            fn(array $encounterData) => new Encounter(
+                $encounterData['description'] ?? '',
+                $encounterData['difficulty'] ?? 0
+            ),
+            $data['encounters'] ?? []
+        );
+
+        return new Scenario(
+            $data['name'] ?? 'Unnamed Scenario',
+            ...$encounters
+        );
     }
 
     public function createScenarios() : \Iterator
     {
-        $scenariosData = [/* .... */];
+        $scenariosData = $this->datastore->loadData();
 
         foreach ($scenariosData as $scenarioData) {
-            yield $this->createScenario(/* ..... */);
+            yield $this->createScenario($scenarioData);
         }
     }
 }

@@ -3,6 +3,8 @@
 namespace Application;
 
 use Lib\ValueObject\PositiveInt;
+use Lib\FileDatastore;
+use Lib\JsonFileReader;
 use Module\Character\Model as Character;
 use Module\Mj\Model as Mj;
 use Module\Scenario\Factory\ScenarioFactory;
@@ -51,10 +53,10 @@ class Application
     public function run($script, ?int $nbRuns = self::DEFAULT_NB_RUNS)
     {
         try {
-            var_dump($this->dataDir);
-
             $scenarioFactory = new ScenarioFactory(
-                'chemin/vers/le/fichier.json'
+                new FileDatastore(
+                    new JsonFileReader($this->dataDir . '/scenarios.json')
+                )
             );
 
             for ($i = 0; $i < $nbRuns; $i++) {
