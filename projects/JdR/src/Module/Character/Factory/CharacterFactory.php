@@ -7,12 +7,12 @@ use Lib\ValueObject\PositiveInt;
 
 class CharacterFactory
 {
-    public static function create(array $data): Character
+    public function create(array $data): Character
     {
         return new Character(
-            $data['name'],
-            new PositiveInt($data['health']),
-            new PositiveInt($data['level'] ?? 1)
+            name: $data['name'],
+            baseHealth: new PositiveInt($data['health']),
+            level: new PositiveInt($data['level'] ?? 1)
         );
     }
 }

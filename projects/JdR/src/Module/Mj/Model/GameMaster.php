@@ -8,35 +8,29 @@ use Module\Scenario\Model\Encounter;
 use Module\Scenario\Model\Outcome;
 use Module\Scenario\Model\Scenario;
 use Module\Scenario\Strategy\ResolutionStrategy;
-
 use Lib\ValueObject\PositiveInt;
 
-/**
- * The Game master class, using various GameAccessories to give results to users.
- */
 class GameMaster
 {
     private array $gameAccessories;
 
+    private Announcer $announcer;
+
     public function __construct(
+        Announcer $announcer,
         GameAccessory ...$gameAccessories
     ) {
+        $this->announcer = $announcer;
         $this->gameAccessories = $gameAccessories;
     }
 
-    protected function announce(string $message)
+    public function pleaseGiveMeACrit() : int
     {
-        echo $message . "\n";
-    }
-
-    public function pleaseGiveMeACrit(): int
-    {
-        // select a random game accessory
         return $this->gameAccessories[array_rand($this->gameAccessories)]
             ->generateRandomPercentScore();
     }
 
-    private function applyOutcome(Character $character, Outcome $outcome): bool
+    private function applyOutcome(Character $character, Outcome $outcome) : bool
     {
         switch ($outcome) {
             case Outcome::FUMBLE:
@@ -62,11 +56,11 @@ class GameMaster
         Party $party,
         Scenario $scenario,
         ResolutionStrategy $strategy
-    ): bool {
-        echo $party . "\n";
+    ) : bool {
+        $this->announcer->announce((string) $party);
 
-        foreach ($scenario->getEncounters() as $encounter) {
-            echo "\n" . $encounter . "\n";
+        foreach ($scenario->play() as $encounter) {
+            $this->announcer->announce("\n" . $encounter);
 
             $tries = 0;
             $score = 0;
@@ -76,26 +70,22 @@ class GameMaster
                 $score = $this->play($party, $encounter) + $bonus;
                 $outcome = $strategy->resolve($encounter, $score);
 
-                echo sprintf(
-                    "Tentative #%d (+%d%% 🧠) : 🎲%d > %s\n",
+                $this->announcer->announce(sprintf(
+                    "Tentative #%d (+%d%% 🧠) : 🎲%d > %s",
                     $tries + 1,
                     $bonus,
                     $score,
                     $outcome->toString()
-                );
+                ));
 
-                foreach ($party->members() as $character) {
-                    if (!$character->isAlive()) continue;
-
-                    $this->applyOutcome($character, $outcome);
-                }
+                $this->applyOutcome($party, $outcome);
 
                 $bonus += Encounter::EXPE_BUFF;
                 $tries++;
             } while ($outcome === Outcome::FAILURE && $tries < Encounter::MAX_TRIES);
         }
 
-        echo $party . "\n";
+        $this->announcer->announce((string) $party);
 
         return !$party->isWipedOut();
     }

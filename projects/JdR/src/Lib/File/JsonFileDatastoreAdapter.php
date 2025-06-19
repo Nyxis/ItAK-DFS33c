@@ -6,25 +6,20 @@ use Lib\Datastore;
 
 class JsonFileDatastoreAdapter implements Datastore
 {
-    private array $cachedData;
+    private array $data;
 
     public function __construct(
         private JsonFileReader $reader
     ) {
-        $this->cachedData = $this->reader->parse();
+        $this->data = $this->reader->parse(); // lecture immédiate à la construction
 
-        if (!is_array($this->cachedData)) {
-            throw new \RuntimeException("Erreur : le fichier JSON ne contient pas de tableau valide.");
-        }
-
-        // Optionnel : empêcher un fichier vide
-        if (empty($this->cachedData)) {
-            throw new \RuntimeException("Erreur : le fichier JSON est vide.");
+        if (empty($this->data)) {
+            throw new \RuntimeException("Le fichier JSON est vide ou invalide.");
         }
     }
 
     public function loadData(): array
     {
-        return $this->cachedData;
+        return $this->data; // retour direct du cache
     }
 }
